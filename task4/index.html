@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Authentication</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #164863;
+        }
+
+        h1 {
+            color: #fff;
+        }
+
+        form {
+            border: 1px solid  #164863;
+            padding: 20px;
+            background-color: black;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            color:#fff;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 95%;
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #message {
+            color: rgba(255, 0, 0, 0.973);
+            margin: 10px 0;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Login Authentication</h1>
+
+    <!-- Registration Form -->
+    <form id="registrationForm">
+        <label for="regUsername">Username:</label>
+        <input type="text" id="regUsername" name="regUsername" required>
+        <br>
+        <label for="regPassword">Password:</label>
+        <input type="password" id="regPassword" name="regPassword" required>
+        <br>
+
+        <button type="button" onclick="register()">Register</button>
+    </form>
+
+    <!-- Login Form -->
+    <form id="loginForm">
+        <label for="loginUsername">Username:</label>
+        <input type="text" id="loginUsername" name="loginUsername" required>
+        <br>
+        <label for="loginPassword">Password:</label>
+        <input type="password" id="loginPassword" name="loginPassword" required>
+        <br>
+
+        <button type="button" onclick="login()">Login</button>
+    </form>
+
+    <!-- Display Messages -->
+    <div id="message"></div>
+
+    <script>
+        // Simple login and registration logic
+        const users = [];
+
+        function register() {
+            const regUsername = document.getElementById('regUsername').value;
+            const regPassword = document.getElementById('regPassword').value;
+
+            if (!regUsername || !regPassword) {
+                showMessage('Please enter both username and password.', 'red');
+                return;
+            }
+
+            if (users.find(user => user.username === regUsername)) {
+                showMessage('Username already exists. Please choose another.', 'red');
+                return;
+            }
+
+            users.push({ username: regUsername, password: regPassword });
+            showMessage('Registration successful. You can now log in.', 'green');
+        }
+
+        function login() {
+            const loginUsername = document.getElementById('loginUsername').value;
+            const loginPassword = document.getElementById('loginPassword').value;
+
+            const user = users.find(user => user.username === loginUsername && user.password === loginPassword);
+            if (user) {
+                showMessage('Login successful. Welcome, ' + user.username + '!', 'green');
+            } else {
+                showMessage('Login failed. Please check your username and password.', 'red');
+            }
+        }
+
+        function showMessage(message, color) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.style.color = color;
+            messageDiv.innerText = message;
+        }
+    </script>
+</body>
+</html>
